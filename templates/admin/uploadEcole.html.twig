@@ -1,0 +1,42 @@
+{% extends "@EasyAdmin/layout.html.twig" %}
+{% block body_javascript %}
+    <script>
+        $(function () {
+
+        });
+    </script>
+{% endblock %}
+
+{% block content_title %}
+    Ecoles disponibles pour l'import
+{% endblock %}
+{% block page_actions %}
+    <button id="unzipManual" class="action-new btn btn-primary">Unziper les écoles</button>
+{% endblock %}
+{% block main %}
+    <style>
+
+    </style>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alertContent" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        <div id="error_container"></div>
+    {% else %}
+        <div id="error_container"></div>
+    {% endfor %}
+    <div class="pageUploadOuvrage">
+
+        <div class="ouvragesSearch">
+            {% for ecole in ecoles %}
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
