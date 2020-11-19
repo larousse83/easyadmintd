@@ -375,7 +375,7 @@ class ArticleEcole
      * @param File $file
      * @return string
      */
-    public function generateUniqueName(File $file): string
+    public function generateUniqueName(File $file): ?string
     {
         if ($file) {
             return md5( uniqid() ) . "." . $file->guessExtension();
