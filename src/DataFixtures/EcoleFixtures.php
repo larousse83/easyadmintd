@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Ecole\Ecole;
 use App\Entity\Ecole\Classe;
 use App\Entity\Ecole\Enseignant;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,72 +19,94 @@ class EcoleFixtures extends Fixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        $ecole = new Ecole();
+        $ecole->setNom("Saint Sauveur");
+        $ecole->setVille("ANGERS");
+        $ecole->setImage("PS.png");//Saint_Sauveur
+        $manager->persist($ecole);
+        $manager->flush();
+
+        try {
+           // $ecole->setImageFile(new UploadedFile('public/medias/fixtures/PS.png', 'PS.png', null, null, true), false);
+            //$ecole->uploadImg(true);
+        } catch (\Exception $e) {
+        }
+
         $this->loadClasse($manager,
             "PS",
             0,
             "maternelle",
             'PS.png',
-            'user1'
+            'user1',
+            $ecole
         );
         $this->loadClasse($manager,
             "MS",
             1,
             "maternelle",
             "MS.png",
-            'user2'
+            'user2',
+            $ecole
         );
         $this->loadClasse($manager,
             "GS",
             2,
             "maternelle",
             "GS.png",
-            'user3'
+            'user3',
+            $ecole
         );
         $this->loadClasse($manager,
             "CP",
             3,
             "primaire",
             "CP.jpg",
-            'user4'
+            'user4',
+            $ecole
         );
         $this->loadClasse($manager,
             "CE1",
             4,
             "primaire",
             "CE1.jpg",
-            'user5'
+            'user5',
+            $ecole
         );
         $this->loadClasse($manager,
             "CE2",
             5,
             "primaire",
             "CE2.jpg",
-            'user6'
+            'user6',
+            $ecole
         );
         $this->loadClasse($manager,
             "CM1",
             6,
             "primaire",
             "CM1.jpg",
-            'user7'
+            'user7',
+            $ecole
         );
         $this->loadClasse($manager,
             "CM2",
             7,
             "primaire",
             "CM2.jpg",
-            'user8'
+            'user8',
+            $ecole
         );
 
         $manager->flush();
     }
 
-    public function loadClasse($manager, $titre, $position, $niveau, $img, $userRef){
+    public function loadClasse($manager, $titre, $position, $niveau, $img, $userRef, $ecole){
         $classe = new Classe();
         $classe->setTitre($titre);
         $classe->setPosition($position);
         $classe->setNiveau($niveau);
         $classe->addEnseignant($this->getReference("user_".$userRef));
+        $classe->setEcole($ecole);
         $manager->persist($classe);
         $manager->flush();
 
